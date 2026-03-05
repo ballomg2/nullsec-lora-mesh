@@ -8,7 +8,7 @@ LoRa mesh protocol frames.
 import struct
 from enum import IntEnum
 from dataclasses import dataclass, field
-from typing import Optional, bytes as Bytes
+from typing import Optional
 
 
 # Frame sync word
